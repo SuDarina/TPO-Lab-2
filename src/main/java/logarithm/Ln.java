@@ -1,17 +1,30 @@
 package logarithm;
 
 import function.Function;
+import system.CsvWork;
+
+import java.io.IOException;
 
 public class Ln implements Function {
 
     private final double eps;
+    private boolean collectStatistics;
 
-    public Ln(double eps) {
+    public Ln(double eps, boolean collectStatistics) {
         this.eps = eps;
+        this.collectStatistics = collectStatistics;
     }
 
     public double getEps() {
         return eps;
+    }
+
+    public boolean isCollectStatistics() {
+        return collectStatistics;
+    }
+
+    public void setCollectStatistics(boolean collectStatistics) {
+        this.collectStatistics = collectStatistics;
     }
 
     private double lnTailor(double x, int n){
@@ -24,21 +37,30 @@ public class Ln implements Function {
     }
 
         @Override
-        public double compute(double x) {
+        public double compute(double x) throws IOException {
             double previous = 0;
             double current = Integer.MAX_VALUE;
             int n = 0;
 
-            if (x > 2) return compute(x / 2) + compute(2);
+            if (x > 2) {
+                if(collectStatistics) {
+                    CsvWork.writeToCSV("Ln", x, current);
+                }
+                return compute(x / 2) + compute(2);
+            }
 
             while (Math.abs(current - previous) > this.getEps()) {
                 previous = current;
                 current = lnTailor(x, ++n);
             }
+
+            if(collectStatistics) {
+                CsvWork.writeToCSV("Ln", x, current);
+            }
             return current;
         }
 
-        public double log(double base, double x) {
+        public double log(double base, double x) throws IOException {
             return compute(x) / compute(base);
         }
 }

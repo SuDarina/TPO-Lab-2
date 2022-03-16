@@ -3,9 +3,13 @@ package function;
 import logarithm.Ln;
 import trigonometric.Sin;
 
+import java.io.IOException;
+
 public class EquationSystem implements Function{
 
     private double eps;
+    public boolean collectTrigStatistics = false;
+    public boolean collectLogStatistics = false;
 
     public EquationSystem(double eps) {
         this.eps = eps;
@@ -19,8 +23,8 @@ public class EquationSystem implements Function{
         this.eps = eps;
     }
 
-    private double logFun(double x){
-        Ln ln = new Ln(eps);
+    private double logFun(double x) throws IOException {
+        Ln ln = new Ln(eps, collectLogStatistics);
         return ((((ln.log(2, x) - ln.log(3, x))
                 * ln.log(5, x)) + (ln.log(2, x -
                 ln.log(10, x)))) / ln.compute(x)) *
@@ -28,9 +32,9 @@ public class EquationSystem implements Function{
     }
 
     @Override
-    public double compute(double x) {
+    public double compute(double x) throws IOException {
         if(x <= 0){
-            Sin sin = new Sin(eps);
+            Sin sin = new Sin(eps, collectTrigStatistics);
             return sin.compute(x);
         } else {
             return logFun(x);

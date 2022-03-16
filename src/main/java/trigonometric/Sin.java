@@ -1,17 +1,30 @@
 package trigonometric;
 
 import function.Function;
+import system.CsvWork;
+
+import java.io.IOException;
 
 public class Sin implements Function {
 
     private final double eps;
+    private boolean collectStatistics;
 
-    public Sin(double eps) {
+    public Sin(double eps, boolean collectStatistics) {
         this.eps = eps;
+        this.collectStatistics = collectStatistics;
     }
 
     public double getFault() {
         return eps;
+    }
+
+    public boolean isCollectStatistics() {
+        return collectStatistics;
+    }
+
+    public void setCollectStatistics(boolean collectStatistics) {
+        this.collectStatistics = collectStatistics;
     }
 
     private double sinTailor(double x, int n){
@@ -30,7 +43,7 @@ public class Sin implements Function {
     }
 
     @Override
-    public double compute(double x) {
+    public double compute(double x) throws IOException {
         double previous = 0;
         double current = 2;
         int n = 0;
@@ -40,6 +53,9 @@ public class Sin implements Function {
         while(Math.abs(current - previous) > this.getFault()){
             previous = current;
             current = sinTailor(x, ++n);
+        }
+        if(collectStatistics){
+            CsvWork.writeToCSV("Sin", x, current);
         }
         return current;
     }

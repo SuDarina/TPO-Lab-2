@@ -1,5 +1,7 @@
 package function;
 
+import java.io.IOException;
+
 public interface Function {
-    public double compute(double x);
+    double compute(double x) throws IOException;
 }
