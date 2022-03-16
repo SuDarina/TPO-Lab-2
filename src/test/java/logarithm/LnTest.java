@@ -44,7 +44,7 @@ public class LnTest {
 
     }
 
-    @ParameterizedTest(name = "{index}: ln({0}) = {1}")
+    @ParameterizedTest(name = "{index}: log_{0}({1}) = {2}")
     @MethodSource("dataLog")
     public void testLog(double base, double in, double out) throws IOException {
         double expected, actual;
