@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Sin implements Function {
 
     private final double eps;
-    private boolean collectStatistics;
+    private final boolean collectStatistics;
 
     public Sin(double eps, boolean collectStatistics) {
         this.eps = eps;
@@ -17,14 +17,6 @@ public class Sin implements Function {
 
     public double getFault() {
         return eps;
-    }
-
-    public boolean isCollectStatistics() {
-        return collectStatistics;
-    }
-
-    public void setCollectStatistics(boolean collectStatistics) {
-        this.collectStatistics = collectStatistics;
     }
 
     private double sinTailor(double x, int n){

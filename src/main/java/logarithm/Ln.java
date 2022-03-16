@@ -5,10 +5,12 @@ import system.CsvWork;
 
 import java.io.IOException;
 
+import static java.lang.Double.NaN;
+
 public class Ln implements Function {
 
     private final double eps;
-    private boolean collectStatistics;
+    private final boolean collectStatistics;
 
     public Ln(double eps, boolean collectStatistics) {
         this.eps = eps;
@@ -17,14 +19,6 @@ public class Ln implements Function {
 
     public double getEps() {
         return eps;
-    }
-
-    public boolean isCollectStatistics() {
-        return collectStatistics;
-    }
-
-    public void setCollectStatistics(boolean collectStatistics) {
-        this.collectStatistics = collectStatistics;
     }
 
     private double lnTailor(double x, int n){
@@ -38,26 +32,35 @@ public class Ln implements Function {
 
         @Override
         public double compute(double x) throws IOException {
-            double previous = 0;
-            double current = Integer.MAX_VALUE;
-            int n = 0;
+            try {
 
-            if (x > 2) {
-                if(collectStatistics) {
+                double previous = 0;
+                double current = Integer.MAX_VALUE;
+                int n = 0;
+
+                if (x > 2) {
+                    if (collectStatistics) {
+                        CsvWork.writeToCSV("Ln", x, current);
+                    }
+                    return compute(x / 2) + compute(2);
+                }
+
+                if (x <= 0) {
+                    throw new IllegalArgumentException("Impossible to compute");
+                }
+
+                while (Math.abs(current - previous) > this.getEps()/10) {
+                    previous = current;
+                    current = lnTailor(x, ++n);
+                }
+
+                if (collectStatistics) {
                     CsvWork.writeToCSV("Ln", x, current);
                 }
-                return compute(x / 2) + compute(2);
+                return current;
+            } catch (IllegalArgumentException e) {
+                return NaN;
             }
-
-            while (Math.abs(current - previous) > this.getEps()) {
-                previous = current;
-                current = lnTailor(x, ++n);
-            }
-
-            if(collectStatistics) {
-                CsvWork.writeToCSV("Ln", x, current);
-            }
-            return current;
         }
 
         public double log(double base, double x) throws IOException {
