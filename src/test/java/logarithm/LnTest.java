@@ -51,10 +51,9 @@ public class LnTest {
         Ln l = new Ln(0.01, false);
         expected = out;
         actual = l.log(base, in);
-        System.out.println("base: " + base + "x = " + in + " actual = " + actual
+        System.out.println("base: " + base + " x = " + in + " actual = " + actual
                 + " expected = " + expected);
         System.out.println(l.getEps());
         assertEquals(expected, actual, l.getEps());
-
     }
 }
