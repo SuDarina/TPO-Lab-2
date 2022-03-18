@@ -11,7 +11,7 @@ public class Main {
         // es.collectLogStatistics = true;
 //        es.collectTrigStatistics = true;
 //        System.out.println(es.compute(0)); // 1.3078723079882582
-        System.out.println(es.compute(0.1)); // 1.3878867564800559
+        System.out.println(es.compute(2.5)); // 1.3878867564800559
 //        System.out.println(es.compute( 0.13107)); // 1.2326318252590944
 //        System.out.println(es.compute(0.2)); // 0.37425826467661377
 //        System.out.println(es.compute(0.5)); // 0.11327487487118551

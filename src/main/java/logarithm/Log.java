@@ -29,15 +29,6 @@ public class Log implements Function {
         this.ln = ln;
         this.base = base;
     }
-    public Log(){
-    }
-
-    public double setUpComp(double base, double x, double eps) throws IOException {
-//        setBase(base);
-//        return compute(x);
-        Ln l = new Ln(eps, false);
-        return  l.compute(x) / l.compute(base);
-    }
 
     @Override
     public double compute(double x) throws IOException {

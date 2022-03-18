@@ -43,10 +43,11 @@ public class Ln implements Function {
                 int n = 0;
 
                 if (x > 2) {
+                    current = compute(x / 2) + compute(2);;
                     if (collectStatistics) {
                         CsvWork.writeToCSV("Ln", x, current);
                     }
-                    return compute(x / 2) + compute(2);
+                    return current;
                 }
 
                 if (x <= 0) {

@@ -15,7 +15,7 @@ public class EquationSystemTest {
         return Arrays.asList(new Object[][] {
                 {0, 0}, {-Math.PI / 4, -Math.sqrt(2) / 2},
                 {-Math.PI / 3, -Math.sqrt(3) / 2}, {-2*Math.PI / 3, -Math.sqrt(3) / 2},
-                {-3* Math.PI / 4, -Math.sqrt(2) / 2}, {-5*Math.PI / 6, -0.5},
+                {-3* Math.PI / 4, -Math.sqrt(2) / 2}, {-5*Math.PI / 6, -0.5}, {-Math.PI / 6, -0.5},
                 {-Math.PI, 0d}, {-Math.PI / 2, -1d}, {-6 * Math.PI, 0d},
                 {0.1, 1.308}, {0.13107, 1.388}, {0.2, 1.233}, {0.5, 0.374},
                 {0.7, 0.113}, {1, Double.NaN}, {3, 1.656}, {5, 3.991},
