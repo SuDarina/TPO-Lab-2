@@ -9,7 +9,7 @@ import static java.lang.Double.NaN;
 
 public class Ln implements Function {
 
-    private final double eps;
+    private double eps;
     private final boolean collectStatistics;
 
     public Ln(double eps, boolean collectStatistics) {
@@ -19,6 +19,10 @@ public class Ln implements Function {
 
     public double getEps() {
         return eps;
+    }
+
+    public void setEps(double eps) {
+        this.eps = eps;
     }
 
     private double lnTailor(double x, int n){
@@ -63,7 +67,4 @@ public class Ln implements Function {
             }
         }
 
-        public double log(double base, double x) throws IOException {
-            return compute(x) / compute(base);
-        }
 }

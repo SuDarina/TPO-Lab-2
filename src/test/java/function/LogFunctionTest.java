@@ -1,6 +1,7 @@
 package function;
 
 import logarithm.Ln;
+import logarithm.Log;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -22,15 +23,18 @@ public class LogFunctionTest {
 
     @ParameterizedTest(name = "{index}: log_fun({0}) = {1}")
     @MethodSource("data")
-    public void testSin(double in, double out) throws IOException {
+    public void testLogFun(double in, double out) throws IOException {
         double expected, actual;
         Ln ln = new Ln(0.01, false);
-        LogFunction lf = new LogFunction(ln);
+        Log log_2 = new Log(ln, 2);
+        Log log_3 = new Log(ln, 3);
+        Log log_5 = new Log(ln, 5);
+        Log log_10 = new Log(ln, 10);
+        LogFunction lf = new LogFunction(ln, log_2, log_3, log_5, log_10);
         expected = out;
-        actual = lf.logFun(in);
+        actual = lf.compute(in);
         System.out.println("x = " + in + " actual = " + actual
                 + " expected = " + expected);
         assertEquals(expected, actual, ln.getEps());
-
     }
 }

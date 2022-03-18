@@ -49,8 +49,9 @@ public class LnTest {
     public void testLog(double base, double in, double out) throws IOException {
         double expected, actual;
         Ln l = new Ln(0.01, false);
+        Log lg = new Log(l, base);
         expected = out;
-        actual = l.log(base, in);
+        actual = lg.compute(in);
         System.out.println("base: " + base + " x = " + in + " actual = " + actual
                 + " expected = " + expected);
         System.out.println(l.getEps());

@@ -1,17 +1,21 @@
 package function;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-public class EquationSystemTest {
+public class EquationSystemIntegrationTest {
     private static final double eps = 0.01;
-    public static Collection<Object[]> data() {
+    private static final LogFunction lf = Mockito.mock(LogFunction.class);
+    public static Collection<Object[]> dataEqFun() {
         return Arrays.asList(new Object[][] {
                 {0, 0}, {-Math.PI / 4, -Math.sqrt(2) / 2},
                 {-Math.PI / 3, -Math.sqrt(3) / 2}, {-2*Math.PI / 3, -Math.sqrt(3) / 2},
@@ -23,18 +27,26 @@ public class EquationSystemTest {
         });
     }
 
-    @ParameterizedTest(name = "{index}: fun({0}) = {1}")
-    @MethodSource("data")
-    public void testEquationSystem(double in, double out) throws IOException {
+    @BeforeAll
+    public static void setup() throws IOException {
+        Collection<Object[]> dataEqFun = dataEqFun();
+        for (Object[] i : dataEqFun) {
+            when(lf.compute(Double.parseDouble(Arrays.stream(i).
+                    sequential().toArray()[0].toString()))).
+                    thenReturn(Double.parseDouble(Arrays.stream(i).
+                            sequential().toArray()[1].toString()));
+        }
+    }
+
+    @ParameterizedTest(name = "{index}: logFun({0}) = {1}")
+    @MethodSource("dataEqFun")
+    public void testLog(double in, double out) throws IOException {
         double expected, actual;
         EquationSystem es = new EquationSystem(eps);
-        es.collectLogStatistics = true;
-        es.collectTrigStatistics = true;
         expected = out;
         actual = es.compute(in);
         System.out.println("x = " + in + " actual = " + actual
                 + " expected = " + expected);
         assertEquals(expected, actual, es.getEps());
-
     }
 }
