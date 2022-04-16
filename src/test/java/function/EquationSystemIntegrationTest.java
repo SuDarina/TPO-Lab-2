@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 public class EquationSystemIntegrationTest {
-    private static final double eps = 0.01;
-    private static final LogFunction lf = Mockito.mock(LogFunction.class);
+    private static final double EPS = 0.01;
+    private static final LogFunction STUB_LOG_FUNCTION = Mockito.mock(LogFunction.class);
     public static Collection<Object[]> dataEqFun() {
         return Arrays.asList(new Object[][] {
                 {0, 0}, {-Math.PI / 4, -Math.sqrt(2) / 2},
@@ -31,7 +31,7 @@ public class EquationSystemIntegrationTest {
     public static void setup() throws IOException {
         Collection<Object[]> dataEqFun = dataEqFun();
         for (Object[] i : dataEqFun) {
-            when(lf.compute(Double.parseDouble(Arrays.stream(i).
+            when(STUB_LOG_FUNCTION.compute(Double.parseDouble(Arrays.stream(i).
                     sequential().toArray()[0].toString()))).
                     thenReturn(Double.parseDouble(Arrays.stream(i).
                             sequential().toArray()[1].toString()));
@@ -42,7 +42,9 @@ public class EquationSystemIntegrationTest {
     @MethodSource("dataEqFun")
     public void testLog(double in, double out) throws IOException {
         double expected, actual;
-        EquationSystem es = new EquationSystem(eps);
+        EquationSystem es = new EquationSystem(EPS);
+        es.collectLogStatistics = true;
+        es.collectTrigStatistics = true;
         expected = out;
         actual = es.compute(in);
         System.out.println("x = " + in + " actual = " + actual

@@ -3,7 +3,6 @@ package system;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 public class CsvWork {
     public static void writeToCSV(String moduleName, double x, double res) throws IOException {
